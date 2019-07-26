@@ -25,14 +25,17 @@
               <tr>
                 <th>Név</th>
                 <th>Város</th>
-                <th colspan="2">Action</th>
+                <th colspan="2">Művelet</th>
               </tr>
             </thead>
             <?php while ($row = $result->fetch_assoc()): ?>
               <tr>
                 <td> <?php echo $row['name']; ?></td>
                 <td> <?php echo $row['location']; ?></td>
-                <td></td>
+                <td>
+                  <a href="index.php?edit=<?php echo $row['id']; ?>" class="btn btn-primary" >Szerkesztés</a>
+                  <a href="process.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger" >Törlés</a>
+                </td>
               </tr>
             <?php endwhile; ?>
           </table>
@@ -49,7 +52,7 @@
                     <input type="text" name="location" id="location" class="form-control" value="Hol lakik?">
                 </div>
                 <div class="form-group">
-                    <button type="submit" name="save" class="btn btn-primary">Mentés</button>
+                    <button type="submit" name="save" class="btn btn-success">Mentés</button>
                 </div>
             </form>
         </div>
