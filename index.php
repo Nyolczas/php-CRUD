@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="hu">
   <head>
     <title>CRUD</title>
     <!-- Required meta tags -->
@@ -16,28 +16,43 @@
       <?php 
         $mysqli = new mysqli('localhost', 'root', '', 'crud') or die(mysql_error($mysqli));
         $result = $mysqli->query("SELECT * FROM data") or die($mysqli->error);
-        pre_r($result->fetch_assoc());
-
-        function pre_r($array){
-            echo "<pre>";
-            print_r($array);
-            echo "</pre>";
-        }
+        
       ?>
-      <div class="row justify-content-center">
-          <form action="process.php" method="post">
-              <div class="form-group">
-                  <label for="name">Név</label>
-                  <input type="text" name="name" id="name" class="form-control" value="Mi a neve?" >
-              </div>
-              <div class="form-group">
-                  <label for="location">Város</label>
-                  <input type="text" name="location" id="location" class="form-control" value="Hol lakik?">
-              </div>
-              <div class="form-group">
-                  <button type="submit" name="save" class="btn btn-primary">Mentés</button>
-              </div>
-          </form>
+      <div class="container">
+        <div class="row justify-content-center">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Név</th>
+                <th>Város</th>
+                <th colspan="2">Action</th>
+              </tr>
+            </thead>
+            <?php while ($row = $result->fetch_assoc()): ?>
+              <tr>
+                <td> <?php echo $row['name']; ?></td>
+                <td> <?php echo $row['location']; ?></td>
+                <td></td>
+              </tr>
+            <?php endwhile; ?>
+          </table>
+        </div>
+
+        <div class="row justify-content-center">
+            <form action="process.php" method="post">
+                <div class="form-group">
+                    <label for="name">Név</label>
+                    <input type="text" name="name" id="name" class="form-control" value="Mi a neve?" >
+                </div>
+                <div class="form-group">
+                    <label for="location">Város</label>
+                    <input type="text" name="location" id="location" class="form-control" value="Hol lakik?">
+                </div>
+                <div class="form-group">
+                    <button type="submit" name="save" class="btn btn-primary">Mentés</button>
+                </div>
+            </form>
+        </div>
       </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
