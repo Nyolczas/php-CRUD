@@ -13,6 +13,7 @@
   </head>
   <body>
       <?php require_once 'process.php'; ?>
+      
       <?php 
         $mysqli = new mysqli('localhost', 'root', '', 'crud') or die(mysql_error($mysqli));
         $result = $mysqli->query("SELECT * FROM data") or die($mysqli->error);
@@ -33,7 +34,7 @@
                 <td> <?php echo $row['name']; ?></td>
                 <td> <?php echo $row['location']; ?></td>
                 <td>
-                  <a href="index.php?edit=<?php echo $row['id']; ?>" class="btn btn-primary" >Szerkesztés</a>
+                  <a href="index.php?edit=<?php echo $row['id']; ?>" class="btn btn-info" >Szerkesztés</a>
                   <a href="process.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger" >Törlés</a>
                 </td>
               </tr>
@@ -43,20 +44,36 @@
 
         <div class="row justify-content-center">
             <form action="process.php" method="post">
+              <input type="hidden" name="id" value="<?php echo $id; ?>">
                 <div class="form-group">
                     <label for="name">Név</label>
-                    <input type="text" name="name" id="name" class="form-control" value="Mi a neve?" >
+                    <input type="text" name="name" id="name" class="form-control" value="<?php echo $name; ?>" placeholder="Mi a neve?" >
                 </div>
                 <div class="form-group">
                     <label for="location">Város</label>
-                    <input type="text" name="location" id="location" class="form-control" value="Hol lakik?">
+                    <input type="text" name="location" id="location" class="form-control" value="<?php echo $location; ?>" placeholder="Hol lakik?">
                 </div>
                 <div class="form-group">
+                  <?php if($update == true): ?>
+                    <button type="submit" name="update" class="btn btn-warning">Frissítés</button>
+                  <?php else: ?>
                     <button type="submit" name="save" class="btn btn-success">Mentés</button>
+                  <?php endif ?>
                 </div>
             </form>
         </div>
       </div>
+
+      <?php if(isset($_SESSION['message'])): ?>
+
+      <div class="mt-5 alert alert-<?php echo $_SESSION['msg_type']; ?>">
+        <?php 
+          echo $_SESSION['message']; 
+          unset($_SESSION['message']);  
+        ?>
+      </div>
+      <?php endif ?>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
