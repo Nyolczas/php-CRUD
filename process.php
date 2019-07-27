@@ -10,8 +10,9 @@ $update = false;
 if(isset($_POST['save'])) {
     $name = $_POST['name'];
     $location = $_POST['location'];
+    $position = $_POST['position'];
 
-    $mysqli->query("INSERT INTO data (name, location) VALUES('$name', '$location')") or die($mysqli->error);
+    $mysqli->query("INSERT INTO data (name, location, position) VALUES('$name', '$location', '$position')") or die($mysqli->error);
     
     $_SESSION['message'] = "Sikeres mentés.";
     $_SESSION['msg_type'] = "success";

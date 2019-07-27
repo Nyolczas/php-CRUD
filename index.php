@@ -10,7 +10,7 @@ $result = $mysqli->query("SELECT * FROM data ORDER BY position") or die($mysqli-
 
       $mysqli->query("UPDATE data SET position = '$newPosition' WHERE id = $index") or die($mysqli->error);
     }
-    exit('success');
+    exit();
   }
 ?>
 
@@ -43,7 +43,9 @@ $result = $mysqli->query("SELECT * FROM data ORDER BY position") or die($mysqli-
               </tr>
             </thead>
             <tbody>
-              <?php while ($row = $result->fetch_assoc()): ?>
+              <?php 
+              $rowCount = 0;
+              while ($row = $result->fetch_assoc()): ?>
                 <tr class="border" data-index="<?php echo $row['id']; ?>" data-position="<?php echo $row['position']; ?>">
                   <td> <?php echo $row['name']; ?></td>
                   <td> <?php echo $row['location']; ?></td>
@@ -51,8 +53,12 @@ $result = $mysqli->query("SELECT * FROM data ORDER BY position") or die($mysqli-
                     <a href="index.php?edit=<?php echo $row['id']; ?>" class="btn btn-info" >Szerkesztés</a>
                     <a href="process.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger" >Törlés</a>
                   </td>
+                  
                 </tr>
-              <?php endwhile; ?>
+              <?php 
+                $rowCount ++; 
+                endwhile;
+              ?>
             </tbody>
           </table>
         </div>
@@ -60,6 +66,7 @@ $result = $mysqli->query("SELECT * FROM data ORDER BY position") or die($mysqli-
         <div class="row justify-content-center">
             <form action="process.php" method="post">
               <input type="hidden" name="id" value="<?php echo $id; ?>">
+              <input type="hidden" name="position" value="<?php echo $rowCount; ?>">
                 <div class="form-group">
                     <label for="name">Név</label>
                     <input type="text" name="name" id="name" class="form-control" value="<?php echo $name; ?>" placeholder="Mi a neve?" >
