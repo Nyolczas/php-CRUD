@@ -44,14 +44,22 @@ if(isset($_GET['edit'])) {
 
 if(isset($_POST['update'])) {
     $id = $_POST['id'];
+    $position = $_POST['position'];
     $name = $_POST['name'];
     $location = $_POST['location'];
 
-    $mysqli->query("UPDATE data SET name = '$name', location = '$location' WHERE id = $id") or die($mysqli->error);
+    $sql = "UPDATE data SET name = '$name', location = '$location', position = '$position' WHERE id = $id";
 
-    $_SESSION['message'] = "A frissítés megtörtént.";
-    $_SESSION['msg_type'] = "warning";
-    
+    if ($mysqli->query($sql) === TRUE) {
+        $_SESSION['message'] = "A frissítés megtörtént.";
+        $_SESSION['msg_type'] = "warning";
+        echo "Record updated successfully";
+    } else {
+        $_SESSION['message'] = "Hiba történt: " . $mysqli->error;
+        $_SESSION['msg_type'] = "danger";
+        echo "Error updating record: " . $mysqli->error;
+    }
+
     header("location:index.php");
 }
 ?>
