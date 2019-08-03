@@ -2,6 +2,7 @@
 require_once 'process.php';
 $mysqli = new mysqli('localhost', 'root', '', 'crud') or die(mysql_error($mysqli));
 $result = $mysqli->query("SELECT * FROM data ORDER BY position") or die($mysqli->error);
+$id = 0;
 
   if(isset($_POST['update2'])) {
     foreach($_POST['position'] as $position ) {
